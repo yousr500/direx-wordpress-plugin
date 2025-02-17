@@ -1,0 +1,110 @@
+// Variables
+$primary-color: #4361ee;
+$background-color: #f8fafc;
+$text-color: #1e293b;
+$input-border-color: #e2e8f0;
+$input-focus-color: #4361ee;
+$error-color: #ef4444;
+
+// General styles
+.auth-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: $background-color;
+    padding: 20px;
+}
+
+.auth-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-header {
+    margin-bottom: 2rem;
+
+    h1 {
+        font-size: 2rem;
+        color: $text-color;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        color: lighten($text-color, 20%);
+        font-size: 0.9rem;
+    }
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: $text-color;
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid $input-border-color;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+
+        &:focus {
+            border-color: $input-focus-color;
+            outline: none;
+        }
+    }
+}
+
+#login-button {
+    width: 100%;
+    padding: 0.8rem;
+    background: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+        background: darken($primary-color, 10%);
+    }
+}
+
+#auth-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: $error-color;
+}
+
+// Responsive design
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 1.5rem;
+    }
+
+    .auth-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-group input {
+        padding: 0.6rem;
+    }
+
+    #login-button {
+        padding: 0.6rem;
+    }
+}

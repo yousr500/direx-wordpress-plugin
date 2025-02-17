@@ -1,0 +1,36 @@
+.wrap {
+    padding: 20px;
+    
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .tab-pane {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+    }
+    .dashboard-buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    
+    .button {
+        background: #4361ee;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.3s;
+        .button-primary {
+            background: #0073aa;
+            color: white;
+            &:hover { background: darken(#4361ee, 10%); }
+        }
+}
+}
+}
