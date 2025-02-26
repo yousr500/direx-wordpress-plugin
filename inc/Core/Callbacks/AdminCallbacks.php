@@ -28,7 +28,6 @@ public function direxOptionsGroup( $input )
     }
     public function direxAdminSection()
     {
-        echo 'Check this beautiful section!';
     }
   
 

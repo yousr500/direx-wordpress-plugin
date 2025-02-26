@@ -16,7 +16,7 @@ class AuthController extends BaseController
     }
 
     public function handleAuthRequest() {
-        check_ajax_referer('direx_auth_nonce', 'nonce');
+        check_ajax_referer('direx_nonce_action', 'nonce');
     
         if (!isset($_POST['username']) || !isset($_POST['password'])) {
             error_log('Missing credentials');
@@ -104,9 +104,14 @@ class AuthController extends BaseController
             filemtime($this->plugin_path . 'assets/js/auth.js'),
             true
         );
+        $nonce = wp_create_nonce('direx_nonce_action');
         wp_localize_script('direx-auth-script', 'direxAjax', [
             'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('direx_auth_nonce'),
+            'nonce' => $nonce
         ]);
+        
+    
+        
+        
     }
 }

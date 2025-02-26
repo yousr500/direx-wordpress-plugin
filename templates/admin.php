@@ -1,11 +1,10 @@
 <div class="wrap">
-<h1>Direx Plugin</h1>
+<h1>Welcome to Direx Plugin</h1>
 <?php settings_errors(); ?>
 
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab-1">Manager Settings</a></li>
+    <li class="active"><a href="#tab-1">Settings Manager</a></li>
     <li><a href="#tab-2">Overview</a></li>
-    <li><a href="#tab-3">About</a></li>
 </ul>
 
 <div class="tab-content">
@@ -17,25 +16,76 @@
              
             ?>
         </form>
-        <div class="dashboard-buttons">
-                <a href="<?php echo admin_url('admin.php?page=direx_auth'); ?>" class="button button-primary">Go to Login</a>
-                <a href="<?php echo admin_url('admin.php?page=direx_ord'); ?>" class="button button-primary">Go to Orders</a>
+        <div class="direx-cards-grid">
+            <!-- Quick Actions Card -->
+            <div class="direx-card">
+                <div class="card-header">
+                    <div class="header-icon settings-icon">
+                    <svg width="24" height="24" fill="#2271b1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M4 5h16v2H4V5zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"></path>
+    </svg>
+</div>
+                    <h3>Quick Actions</h3>
+                </div>
+                <div class="card-content">
+                    <div class="quick-actions-grid">
+                        <a href="<?php echo admin_url('admin.php?page=direx_auth'); ?>" class="action-button">
+                            <span>Go to Login</span>
+                            <p>Manage authentication settings</p>
+                        </a>
+                        <a href="<?php echo admin_url('admin.php?page=direx_ord'); ?>" class="action-button">
+                            <span>Go to Orders</span>
+                            <p>View and manage deliveries</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="plugin-info">
-                <h2>Welcome to Direx Plugin</h2>
                 <p>This plugin helps you manage your orders and authentication seamlessly.</p>
                 <p>Use the tabs above to navigate through the settings and features of the plugin.</p>
             </div>
             </div>
         <div id="tab-2" class="tab-pane">
-            <h3>Overview</h3>
-            <p>Welcome to the Direx Plugin Dashboard. Use the tabs above to navigate through the settings and features of the plugin.</p>
+                <div class="direx-cards-grid">
+                <div class="direx-card">
+                <div class="card-header">
+                    <div class="header-icon guide-icon"> <svg width="24" height="24" fill="#2271b1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/>
+    </svg>
+</div>
+                    
+
+                    <h3>Getting Started</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="getting-started-list">
+                        <li>
+                            <div class="step-number">1</div>
+                            <span>Configure your API credentials</span>
+                        </li>
+                        <li>
+                            <div class="step-number">2</div>
+                            <span>Set up delivery zones</span>
+                        </li>
+                        <li>
+                            <div class="step-number">3</div>
+                            <span>Start managing orders</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+            <div class="plugin-info">
+            <p>The Direx Plugin is designed to provide essential functionalities for the user, 
+                with the buttons in the Manager Settings section of the Dashboard page you can access 
+                the Login page to put in you're credentials in return be provided with a token and the Order page to check all the active orders.</p>
+                <div class="plugin-info">
+        </div>
+   
         </div>
 
-        <div id="tab-3" class="tab-pane">
-            <h3>About</h3>
-            <p>The Direx Plugin is designed to provide essential functionalities for managing your WordPress site. For more information, visit our <a href="http://direx.com">website</a>.</p>
-        </div>
+        
         </div>
 
 </div>

@@ -8,7 +8,7 @@ namespace Jemaa\DirexPlugin\Base;
 use Jemaa\DirexPlugin\Base\BaseController;
 
 /**
- * Class Enqueue
+ * class Enqueue
  */
 
 class Enqueue extends BaseController {

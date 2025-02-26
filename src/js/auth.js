@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('auth.js loaded');
+    
     const authForm = document.getElementById('auth-form');
     const authMessage = document.getElementById('auth-message');
 
@@ -11,32 +12,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('password').value;
             console.log('Form submitted', { username, password });
 
-            fetch('/wp-json/direx/v1/login', {
+            // Create FormData and append necessary fields
+            const formData = new FormData();
+            formData.append('action', 'direx_auth');
+            formData.append('username', username);
+            formData.append('password', password);
+            formData.append('nonce', direxAjax.nonce); // Pass nonce correctly
+
+            fetch(direxAjax.ajaxurl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-WP-Nonce': direxAjax.nonce,
-                },
-                body: JSON.stringify({
-                    username: username,
-                    password: password,
-                }),
+                body: formData, // No need for JSON.stringify()
             })
-            .then(response => {
-                console.log('Raw API Response:', response);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse the response as JSON
-            })
+            .then(response => response.json()) // Parse JSON response
             .then(data => {
                 console.log('Parsed API Response:', data);
-                if (data.token) {
-                    console.log('API Token:', data.token);
-                    authMessage.innerHTML = `<p>Login successful! Token: ${data.token}</p>`;
+                if (data.success) {
+                    console.log('API Token:', data.data.token);
+                    authMessage.innerHTML = `<p>Login successful! Token: ${data.data.token}</p>`;
                 } else {
-                    console.log('Error Data:', data);
-                    authMessage.innerHTML = `<p>Login failed: ${data.message}</p>`;
+                    console.log('Error Data:', data.data);
+                    authMessage.innerHTML = `<p>Login failed: ${data.data.message}</p>`;
                 }
             })
             .catch(error => {

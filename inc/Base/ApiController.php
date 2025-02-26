@@ -12,18 +12,19 @@ class ApiController extends WP_REST_Controller
     public function register(): void
     {
         add_action('rest_api_init', [$this, 'register_routes']);
+        error_log('ApiController registered');
+
     }
 
     public function register_routes(): void
     {
-        error_log('Registering REST API Routes');
 
         register_rest_route('direx/v1', '/login', [
             'methods' => 'POST',
             'callback' => [$this, 'handle_login'],
             'permission_callback' => '__return_true',
         ]);
-        error_log('Login route registered');
+        
 
 
         // Register order routes

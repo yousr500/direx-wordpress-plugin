@@ -100,8 +100,8 @@ class Admin extends BaseController
          
           [
             'id' => 'direx_admin_index',
-               'title' => 'Settings Manager',
                'callback' => array( $this->callbacks, 'direxAdminSection' ),
+               'title' => '',
                'page' => 'direx_plugin'
           ]
       

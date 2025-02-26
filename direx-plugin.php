@@ -6,7 +6,7 @@
 /*
 Plugin Name: Direx Plugin
 Plugin URI: http://direx.com/plugin
-Description: A very important plugin.
+Description: The Direx Plugin is designed to secure user authentification, view and manage orders.
 Version: 1.0.0
 Author: Yosr Jemaa
 Auther URI : http://direx.com 
@@ -55,4 +55,6 @@ register_deactivation_hook( __FILE__ , 'deactivate_direx_plugin');
     Jemaa\DirexPlugin\Init::get_instance()->register_services();
 }
 add_action('plugins_loaded', 'initialize_direx_plugin');    
+
+
     

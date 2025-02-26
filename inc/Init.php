@@ -35,7 +35,7 @@ final class Init
         Base\AuthController::class,
         Base\OrderController::class,
         Base\ApiController::class,
-        
+        Base\BaseController::class,
     ];
    }
     /**

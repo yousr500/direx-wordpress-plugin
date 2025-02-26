@@ -5,10 +5,11 @@
 namespace Jemaa\DirexPlugin\Base;
 
 /**
- * Class BaseController
+ * class BaseController
  */
 
-class BaseController {
+class BaseController
+{
     public $plugin_path;
     public $plugin_url;
     public $plugin_name;

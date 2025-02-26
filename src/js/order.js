@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadOrders() {
         document.getElementById('loading-spinner').style.display = 'block';
     
-        fetch('/wp-json/direx/v1/orders', {
+        fetch('https://stagingapi.b2cdelivery.tn/api-token-auth/', {
             headers: {
                 'X-WP-Nonce': direxAjax.nonce, // Add nonce here
             },
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const orderId = event.target.dataset.id;
         console.log('Delete button clicked for order ID:', orderId);
         // Implement delete logic here
-        fetch(`/wp-json/direx/v1/orders/${orderId}`, {
+        fetch(`https://stagingapi.b2cdelivery.tn/api-token-auth/${orderId}`, {
             method: 'DELETE',
         })
             .then(response => response.json())

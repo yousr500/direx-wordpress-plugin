@@ -8,13 +8,10 @@
                 <option value="20">Showing 20</option>
                 <option value="50">Showing 50</option>
             </select>
-            <button id="filterBtn" class="button"><span class="dashicons dashicons-filter"></span> Filter</button>
             <button id="exportBtn" class="button"><span class="dashicons dashicons-download"></span> Export</button>
             <button id="syncBtn" class="button-primary"><span class="dashicons dashicons-update"></span> Synchronize</button>
-            <button id="addProductBtn" class="button-primary">+ Add New Product</button>
         </div>
     </div>
-    <div id="loading-spinner" style="display: none;">Loading...</div>
 
     <table class="wp-list-table widefat fixed striped orders-table">
         <thead>

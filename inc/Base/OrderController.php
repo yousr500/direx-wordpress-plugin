@@ -34,8 +34,7 @@ use Jemaa\DirexPlugin\Base\BaseController;
             'direx-order-script',
             $this->plugin_url . 'assets/js/order.js',
             ['jquery'],
-            '1.0.0',
-            true,
+            
             filemtime($this->plugin_path . 'assets/js/order.js'),
             true
         );
