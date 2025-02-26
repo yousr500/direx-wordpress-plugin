@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    console.log('order.js loaded');
     let currentPage = 1;
     let itemsPerPage = 10;
     let totalOrders = 0;
@@ -13,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Load orders
     function loadOrders() {
         document.getElementById('loading-spinner').style.display = 'block';
-    
-        fetch('https://stagingapi.b2cdelivery.tn/api-token-auth/', {
+
+        fetch(direxAjax.ajax_url + '?action=get_orders', {
             headers: {
-                'X-WP-Nonce': direxAjax.nonce, // Add nonce here
+                'X-WP-Nonce': direxAjax.nonce,
             },
         })
             .then(response => {
@@ -26,15 +27,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                orderData = data;
-                totalOrders = data.length;
-                renderTable(data);
-                updatePagination();
-                setupActionButtons();
+                if (data.success) {
+                    orderData = data.data;
+                    totalOrders = data.data.length;
+                    renderTable(orderData);
+                    updatePagination();
+                    setupActionButtons();
+                } else {
+                    throw new Error('Failed to load orders');
+                }
             })
             .catch(error => {
                 console.error('Error loading orders:', error);
-                document.getElementById('orderTableBody').innerHTML = `<tr><td colspan="8">Error loading orders. Please try again.</td></tr>`;
+                document.getElementById('orderTableBody').innerHTML = '<tr><td colspan="8">Error loading orders. Please try again.</td></tr>';
             })
             .finally(() => {
                 document.getElementById('loading-spinner').style.display = 'none';
@@ -98,8 +103,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const orderId = event.target.dataset.id;
         console.log('Delete button clicked for order ID:', orderId);
         // Implement delete logic here
-        fetch(`https://stagingapi.b2cdelivery.tn/api-token-auth/${orderId}`, {
+        fetch(`${direxAjax.ajax_url}?action=delete_order&order_id=${orderId}`, {
             method: 'DELETE',
+            headers: {
+                'X-WP-Nonce': direxAjax.nonce,
+            },
         })
             .then(response => response.json())
             .then(data => {
@@ -117,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Product selected:', orderId);
         // Implement selection logic here
     }
+
     function handleSelectAll(event) {
         const isChecked = event.target.checked;
         document.querySelectorAll('.select-product').forEach(checkbox => {
@@ -157,19 +166,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listeners for filter, search, and records per page
     function setupEventListeners() {
-        document.getElementById('filterBtn').addEventListener('click', handleFilter);
         document.getElementById('exportBtn').addEventListener('click', handleExport);
         document.getElementById('syncBtn').addEventListener('click', handleSync);
-        document.getElementById('addProductBtn').addEventListener('click', handleAddProduct);
+
         document.getElementById('recordsPerPage').addEventListener('change', handleRecordsPerPage);
         document.getElementById('searchInput').addEventListener('input', handleSearch);
     }
 
-    // Handlers
-    function handleFilter() {
-        // Implement filter logic
-        console.log('Filter clicked');
-    }
+ 
 
     function handleExport() {
         console.log('Export clicked');
@@ -184,16 +188,12 @@ document.addEventListener('DOMContentLoaded', function () {
         newWindow.print();
     }
 
-
     function handleSync() {
         console.log('Sync clicked');
         // Implement sync logic
     }
 
-    function handleAddProduct() {
-        console.log('Add product clicked');
-        // Implement add product logic
-    }
+   
 
     function handleRecordsPerPage(e) {
         itemsPerPage = parseInt(e.target.value, 10);

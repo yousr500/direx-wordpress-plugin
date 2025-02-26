@@ -26,31 +26,7 @@ class ApiController extends WP_REST_Controller
         ]);
         
 
-
-        // Register order routes
-        register_rest_route('direx/v1', '/orders', [
-            'methods' => 'GET',
-            'callback' => [$this, 'get_orders'],
-            'permission_callback' => [$this, 'check_permissions'],
-        ]);
-
-        register_rest_route('direx/v1', '/orders', [
-            'methods' => 'POST',
-            'callback' => [$this, 'create_order'],
-            'permission_callback' => [$this, 'check_permissions'],
-        ]);
-
-        register_rest_route('direx/v1', '/orders/(?P<id>\d+)', [
-            'methods' => 'PUT',
-            'callback' => [$this, 'update_order'],
-            'permission_callback' => [$this, 'check_permissions'],
-        ]);
-
-        register_rest_route('direx/v1', '/orders/(?P<id>\d+)', [
-            'methods' => 'DELETE',
-            'callback' => [$this, 'delete_order'],
-            'permission_callback' => [$this, 'check_permissions'],
-        ]);
+        
     }
 
     public function handle_login(\WP_REST_Request $request) {
@@ -98,33 +74,8 @@ class ApiController extends WP_REST_Controller
         }
     }
 
-    public function get_orders(\WP_REST_Request $request)
-    {
-        // Simulate fetching orders (replace with your actual logic)
-        $orders = [
-            ['id' => 1, 'name' => 'Product A', 'price' => 100, 'stock' => 10, 'type' => 'Type A', 'status' => 'Active'],
-            ['id' => 2, 'name' => 'Product B', 'price' => 200, 'stock' => 5, 'type' => 'Type B', 'status' => 'Inactive'],
-        ];
-        return rest_ensure_response($orders);
-    }
 
-    public function create_order(\WP_REST_Request $request)
-    {
-        // Implement logic to create a new order
-        return rest_ensure_response([]);
-    }
-
-    public function update_order(\WP_REST_Request $request)
-    {
-        // Implement logic to update an existing order
-        return rest_ensure_response([]);
-    }
-
-    public function delete_order(\WP_REST_Request $request)
-    {
-        // Implement logic to delete an order
-        return rest_ensure_response([]);
-    }
+    
 
     public function check_permissions(\WP_REST_Request $request)
     {
