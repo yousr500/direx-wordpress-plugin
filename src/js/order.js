@@ -13,12 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Load orders
     function loadOrders() {
-        document.getElementById('loading-spinner').style.display = 'block';
+        const loadingSpinner = document.getElementById('loading-spinner');
+        if (loadingSpinner) {
+            loadingSpinner.style.display = 'block';
+        }
 
-        fetch(direxAjax.ajax_url + '?action=get_orders', {
-            headers: {
-                'X-WP-Nonce': direxAjax.nonce,
-            },
+        fetch(`${direxAjax.ajax_url}?action=get_orders&security=${direxAjax.nonce}`, {
+            method: 'GET',
         })
             .then(response => {
                 if (!response.ok) {
@@ -39,16 +40,22 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Error loading orders:', error);
-                document.getElementById('orderTableBody').innerHTML = '<tr><td colspan="8">Error loading orders. Please try again.</td></tr>';
+                const orderTableBody = document.getElementById('orderTableBody');
+                if (orderTableBody) {
+                    orderTableBody.innerHTML = '<tr><td colspan="8">Error loading orders. Please try again.</td></tr>';
+                }
             })
             .finally(() => {
-                document.getElementById('loading-spinner').style.display = 'none';
+                if (loadingSpinner) {
+                    loadingSpinner.style.display = 'none';
+                }
             });
     }
 
     // Render table
     function renderTable(data) {
         const tbody = document.getElementById('orderTableBody');
+        if (!tbody) return;
         tbody.innerHTML = '';
 
         const start = (currentPage - 1) * itemsPerPage;
@@ -63,13 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     <td>${item.id}</td>
                     <td>${item.price}</td>
                     <td>${item.stock}</td>
-                    <td>${item.type}</td>
+                    <td>${item.brand}</td>
+                     <td>${item.category}</td>
                     <td><span class="status-badge ${item.status.toLowerCase()}">${item.status}</span></td>
-                    <td class="action-cell">
-                        <button class="button edit-btn" data-id="${item.id}">Edit</button>
-                        <button class="button delete-btn" data-id="${item.id}">Delete</button>
-                    </td>
-                </tr>
+                  
             `;
             tbody.innerHTML += row;
         });
@@ -77,53 +81,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Set up event listeners for action buttons
     function setupActionButtons() {
-        document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', handleEdit);
-        });
-
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', handleDelete);
-        });
-
         document.querySelectorAll('.select-product').forEach(checkbox => {
             checkbox.addEventListener('change', handleSelectProduct);
         });
-        document.getElementById('selectAll').addEventListener('change', handleSelectAll);
-    }
 
-    // Handle edit button click
-    function handleEdit(event) {
-        const orderId = event.target.dataset.id;
-        console.log('Edit button clicked for order ID:', orderId);
-        // Implement edit logic here
-    }
-
-    // Handle delete button click
-    function handleDelete(event) {
-        const orderId = event.target.dataset.id;
-        console.log('Delete button clicked for order ID:', orderId);
-        // Implement delete logic here
-        fetch(`${direxAjax.ajax_url}?action=delete_order&order_id=${orderId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-WP-Nonce': direxAjax.nonce,
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Order deleted:', data);
-                loadOrders();
-            })
-            .catch(error => {
-                console.error('Error deleting order:', error);
-            });
+        const selectAllCheckbox = document.getElementById('selectAll');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', handleSelectAll);
+        }
     }
 
     // Handle select product
     function handleSelectProduct(event) {
         const orderId = event.target.dataset.id;
         console.log('Product selected:', orderId);
-        // Implement selection logic here
     }
 
     function handleSelectAll(event) {
@@ -137,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function updatePagination() {
         const totalPages = Math.ceil(totalOrders / itemsPerPage);
         const paginationContainer = document.querySelector('.pagination-links');
+        if (!paginationContainer) return;
+
         paginationContainer.innerHTML = `
             <button class="button prev-page" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
             <span class="paging-input">
@@ -147,37 +120,57 @@ document.addEventListener('DOMContentLoaded', function () {
             <button class="button next-page" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
         `;
 
-        document.querySelector('.prev-page').addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderTable(orderData);
-                updatePagination();
-            }
-        });
+        const prevPageButton = document.querySelector('.prev-page');
+        const nextPageButton = document.querySelector('.next-page');
 
-        document.querySelector('.next-page').addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderTable(orderData);
-                updatePagination();
-            }
-        });
+        if (prevPageButton) {
+            prevPageButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable(orderData);
+                    updatePagination();
+                }
+            });
+        }
+
+        if (nextPageButton) {
+            nextPageButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderTable(orderData);
+                    updatePagination();
+                }
+            });
+        }
     }
 
     // Event listeners for filter, search, and records per page
     function setupEventListeners() {
-        document.getElementById('exportBtn').addEventListener('click', handleExport);
-        document.getElementById('syncBtn').addEventListener('click', handleSync);
+        const exportBtn = document.getElementById('exportBtn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', handleExport);
+        }
 
-        document.getElementById('recordsPerPage').addEventListener('change', handleRecordsPerPage);
-        document.getElementById('searchInput').addEventListener('input', handleSearch);
+        const syncBtn = document.getElementById('syncBtn');
+        if (syncBtn) {
+            syncBtn.addEventListener('click', handleSync);
+        }
+
+        const recordsPerPageSelect = document.getElementById('recordsPerPage');
+        if (recordsPerPageSelect) {
+            recordsPerPageSelect.addEventListener('change', handleRecordsPerPage);
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', handleSearch);
+        }
     }
-
- 
 
     function handleExport() {
         console.log('Export clicked');
         const table = document.querySelector('.orders-table');
+        if (!table) return;
         const tableHtml = table.outerHTML;
         const newWindow = window.open('', '', 'height=600,width=800');
         newWindow.document.write('<html><head><title>Order Management</title>');
@@ -190,10 +183,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleSync() {
         console.log('Sync clicked');
-        // Implement sync logic
+        loadOrders();
     }
-
-   
 
     function handleRecordsPerPage(e) {
         itemsPerPage = parseInt(e.target.value, 10);
@@ -207,8 +198,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const filteredData = orderData.filter(item => {
             return (
                 item.name.toLowerCase().includes(searchTerm) ||
-                item.id.toLowerCase().includes(searchTerm) ||
-                item.type.toLowerCase().includes(searchTerm)
+                item.id.toString().toLowerCase().includes(searchTerm) || // Ensure id is a string
+                item.brand.toLowerCase().includes(searchTerm) || 
+                item.category.toLowerCase().includes(searchTerm)
             );
         });
         renderTable(filteredData);

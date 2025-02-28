@@ -38,6 +38,7 @@ $purple: #8b5cf6;
             border-radius: 8px;
             width: 200px;
             transition: all 0.2s;
+            font-size: medium;
             
             &:focus {
                 border-color: $primary;
@@ -155,17 +156,8 @@ $purple: #8b5cf6;
             transition: all 0.2s;
             margin-right: 8px;
             
-            &.edit-btn {
-                background: $primary;
-                color: white;
-                &:hover { background: darken($primary, 10%); }
-            }
             
-            &.delete-btn {
-                background: $danger;
-                color: white;
-                &:hover { background: darken($danger, 10%); }
-            }
+          
         }
     }
 }
@@ -215,3 +207,6 @@ $purple: #8b5cf6;
         }
     }
 }
+
+
+    
