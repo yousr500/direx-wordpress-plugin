@@ -22,3 +22,9 @@
 1. Download or clone this repository:
    ```bash
    git clone https://github.com/yousr500/direx-wordpress-plugin.git
+## ✨ Author
+
+**Yosr Jemaa**  
+🎓 Web Development Student – ISET Nabeul  
+🔗 [GitHub](https://github.com/yousr500)  
+✉️ yosrjemaa4@gmail.com
