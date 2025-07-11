@@ -28,3 +28,15 @@
 🎓 Web Development Student – ISET Nabeul  
 🔗 [GitHub](https://github.com/yousr500)  
 ✉️ yosrjemaa4@gmail.com
+
+## 🖼️ Screenshots
+
+### 🔐 Login Page
+![Login Page](screenshots/login.png)
+
+### 📊 Dashboard
+![Dashboard](screenshots/dashboard_sect1.png)
+![Dashboard](screenshots/dashboard_sect2.png)
+
+### 📊 Order Management
+![Order Management](screenshots/orders.png)
